@@ -1,0 +1,20 @@
+#!/bin/bash
+# this script must be run a an administrator (sudo)
+
+# set internal field separator to something other than tab
+  IFS=#
+
+  while read inputline
+    do
+      lastname="$(echo $inputline | cut -f1)"
+      firstname="$(echo $inputline | cut -f2)"
+      login="$(echo $inputline | cut -f3)"
+      email="$(echo $inputline | cut -f4)"
+if grep $login /etc/passwd ; then
+  echo "$login already is a user"
+else
+#echo "sudo useradd --base-dir /home/students -G students,ece_students,2612_2018s --comment=\"$firstname $lastname, $email\" $login"
+  sudo useradd --base-dir /home/students -G students,ece_students,2612_2018s --comment="$firstname $lastname, $email" $login
+fi
+  done </home/fhiggins/bin2612/2613_current.txt
+  
